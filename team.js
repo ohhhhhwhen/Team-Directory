@@ -59,7 +59,7 @@ async function promptAdd() {
 
 async function promptDone() {
   const answers = await inquirer.prompt(prompt.Done);
-  if (answers.done.toLowerCase() === "yes") {
+  if (answers.done.toLowerCase() === "yes" || answers.done.toLowerCase() === "y") {
     allDone = true;
   } else {
     allDone = false;

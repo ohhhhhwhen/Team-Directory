@@ -1,6 +1,6 @@
 'use strict';
 
-const Intern = require('../lib/Intern');
+const Intern = require('../intern');
 
 test('Can set school via constructor', () => {
   const testValue = 'UCLA';

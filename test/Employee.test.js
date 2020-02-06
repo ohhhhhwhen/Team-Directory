@@ -1,10 +1,10 @@
 'use strict';
 
-const Employee = require('./employee');
+const Employee = require('../employee');
 
 test('Can instantiate Employee instance', () => {
   const employee = new Employee();
-  expect(typeof e).toBe('object');
+  expect(typeof employee).toBe('object');
 });
 
 test('Can set name via constructor arguments', () => {
