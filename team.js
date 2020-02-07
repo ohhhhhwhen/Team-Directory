@@ -1,5 +1,6 @@
 "use strict";
 
+const fs = require("fs");
 const inquirer = require("inquirer");
 const Employee = require("./employee");
 const Engineer = require("./engineer");
@@ -61,11 +62,16 @@ async function teamBuilder() {
       break;
     default:
       buildHTML(teamMembers);
+      console.log(teamMembers[0].name);
+      console.log(teamMembers[1].name);
+
   }
 }
 
-function buildHTML(manager, teammates) {
-  return `<!DOCTYPE html>
+function buildHTML(teamMembers) {
+  fs.writeFile(
+    "index.html",
+    `<!DOCTYPE html>
   <html lang="en">
     <head>
       <meta charset="UTF-8" />
@@ -86,12 +92,17 @@ function buildHTML(manager, teammates) {
           <h1 class="display-4">Team Directory</h1>
         </div>
       <div class="row">
-          ${managerHTML(manager)}
-          {{team}}
+          ${managerHTML(teamMembers)}
+          ${arrayToHTML(teamMembers)}
       </div>
       </div>
     </body>
-  </html>`;
+  </html>`,
+    function(err) {
+      if (err) throw err;
+      console.log("Team Page Created!");
+    }
+  );
 }
 
 async function managerHTML(teamMember) {
@@ -100,46 +111,46 @@ async function managerHTML(teamMember) {
       <div class="card">
           <img class="card-img-top" src="./images/managerimg.jpg"/>
           <div class="card-body">
-            <h4>${teamMember.name}</h4>
-            <h4>${teamMember.title}</h4>
-            <h4>ID #: ${teamMember.id}</h4>
-            <h4>Office #: ${teamMember.office}</h4>
-            <h4>Email: ${teamMember.email}</h4>
+            <h4>${teamMember[0].name}</h4>
+            <h4>${teamMember[0].title}</h4>
+            <h4>ID #: ${teamMember[0].id}</h4>
+            <h4>Office #: ${teamMember[0].office}</h4>
+            <h4>Email: ${teamMember[0].email}</h4>
             </div>
           </div>`;
 }
 
-async function internHTML(teamMembers) {
+async function internHTML(teamMember) {
   return `
-    <div class="col-md-12">
+    <div class="col-md-3">
       <div class="card">
           <img class="card-img-top" src="./images/internimg.jpg"/>
           <div class="card-body">
-            <h4>${teamMembers.name}</h4>
-            <h4>${teamMembers.title}</h4>
-            <h4>ID #: ${teamMembers.id}</h4>
-            <h4>Email: ${teamMembers.email}</h4>
-            <h4>School: ${teamMembers.school}</h4>
+            <h4>${teamMember.name}</h4>
+            <h4>${teamMember.title}</h4>
+            <h4>ID #: ${teamMember.id}</h4>
+            <h4>Email: ${teamMember.email}</h4>
+            <h4>School: ${teamMember.school}</h4>
             </div>
           </div>`;
 }
 
-async function engineerHTML(teamMembers) {
+async function engineerHTML(teamMember) {
   return `
-    <div class="col-md-12">
+    <div class="col-md-3">
       <div class="card">
           <img class="card-img-top" src="./images/engineerimg.jpg"/>
           <div class="card-body">
-            <h4>${teamMembers.name}</h4>
-            <h4>${teamMembers.title}</h4>
-            <h4>ID #: ${teamMembers.id}</h4>
-            <h4>Email: ${teamMembers.email}</h4>
-            <h4>GitHub: ${teamMembers.username}</h4>
+            <h4>${teamMember.name}</h4>
+            <h4>${teamMember.title}</h4>
+            <h4>ID #: ${teamMember.id}</h4>
+            <h4>Email: ${teamMember.email}</h4>
+            <h4>GitHub: ${teamMember.username}</h4>
             </div>
           </div>`;
 }
 
-async function arrayToHTML() {
+async function arrayToHTML(teamMembers) {
   for (let x = 1; x < teamMembers.length; ++x) {
     if (teamMembers[x].title === "Engineer") {
       await engineerHTML(teamMembers[x].title);
