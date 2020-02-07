@@ -65,18 +65,16 @@ module.exports = {
       name: "school"
     }
   ],
-  AddMore: [
+  AddorDone: [
     {
-    type: "input",
-    message: "Add Engineer or Intern:",
-    name: "add"
-    }
-  ],
-  Done: [
-    {
-      type: "input",
-      message: "Are You Done?",
-      name: "done"
+      type: "list",
+      message: "Pick One:",
+      name: "pick",
+      choices: [
+        "Add Intern",
+        "Add Engineer",
+        "All Done"
+      ]
     }
   ]
 };

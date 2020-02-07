@@ -6,7 +6,6 @@ const Engineer = require("./engineer");
 const Manager = require("./manager");
 const Intern = require("./intern");
 const prompt = require("./prompt");
-const allDone = false;
 const teamMembers = [];
 
 async function promptManager() {
@@ -20,6 +19,7 @@ async function promptManager() {
     answers.office
   );
   teamMembers.push(manager);
+  teamBuilder();
 }
 
 async function promptEngineer() {
@@ -33,6 +33,7 @@ async function promptEngineer() {
     answers.username
   );
   teamMembers.push(engineer);
+  teamBuilder();
 }
 
 async function promptIntern() {
@@ -46,37 +47,24 @@ async function promptIntern() {
     answers.school
   );
   teamMembers.push(intern);
+  teamBuilder();
 }
 
-async function promptAdd() {
-  const answers = await inquirer.prompt(prompt.AddMore);
-  if (answers.add.toLowerCase() === "engineer") {
-    await promptEngineer();
-  } else if (answers.add.toLowerCase() === "intern") {
-    await promptIntern();
-  } else {
-    await promptAdd();
+async function teamBuilder() {
+  const answer = await inquirer.prompt(prompt.AddorDone);
+  switch (answer.pick) {
+    case "Add Engineer":
+      promptEngineer();
+      break;
+    case "Add Intern":
+      promptIntern();
+      break;
+    default:
+      buildHTML(teamMembers);
   }
 }
 
-async function promptDone() {
-  const answers = await inquirer.prompt(prompt.Done);
-  if (
-    answers.done.toLowerCase() === "yes" ||
-    answers.done.toLowerCase() === "y"
-  ) {
-    allDone = true;
-  } else if (
-    answers.done.toLowerCase() === "no" ||
-    answers.done.toLowerCase() === "n"
-  ) {
-    allDone = false;
-  } else {
-    await promptDone();
-  }
-}
-
-function mainHTML() {
+function buildHTML(manager, teammates) {
   return `<!DOCTYPE html>
   <html lang="en">
     <head>
@@ -98,31 +86,31 @@ function mainHTML() {
           <h1 class="display-4">Team Directory</h1>
         </div>
       <div class="row">
-          
+          ${managerHTML(manager)}
+          {{team}}
       </div>
       </div>
     </body>
   </html>`;
 }
 
-async function managerHTML(teamMembers) {
-  const managerStr = `
+async function managerHTML(teamMember) {
+  return `
     <div class="col-md-12">
       <div class="card">
           <img class="card-img-top" src="./images/managerimg.jpg"/>
           <div class="card-body">
-            <h4>${teamMembers.name}</h4>
-            <h4>${teamMembers.title}</h4>
-            <h4>ID #: ${teamMembers.id}</h4>
-            <h4>Office #: ${teamMembers.office}</h4>
-            <h4>Email: ${teamMembers.email}</h4>
+            <h4>${teamMember.name}</h4>
+            <h4>${teamMember.title}</h4>
+            <h4>ID #: ${teamMember.id}</h4>
+            <h4>Office #: ${teamMember.office}</h4>
+            <h4>Email: ${teamMember.email}</h4>
             </div>
           </div>`;
-  console.log(managerStr);
 }
 
 async function internHTML(teamMembers) {
-  const internStr = `
+  return `
     <div class="col-md-12">
       <div class="card">
           <img class="card-img-top" src="./images/internimg.jpg"/>
@@ -134,11 +122,10 @@ async function internHTML(teamMembers) {
             <h4>School: ${teamMembers.school}</h4>
             </div>
           </div>`;
-  console.log(internStr);
 }
 
 async function engineerHTML(teamMembers) {
-  const engineerStr = `
+  return `
     <div class="col-md-12">
       <div class="card">
           <img class="card-img-top" src="./images/engineerimg.jpg"/>
@@ -150,26 +137,16 @@ async function engineerHTML(teamMembers) {
             <h4>GitHub: ${teamMembers.username}</h4>
             </div>
           </div>`;
-  console.log(engineerStr);
 }
 
-async function init() {
-  await promptManager();
-  await promptAdd();
-  await promptDone();
-  while (!allDone) {
-    await promptAdd();
-    await promptDone();
-  }
-  for (const x = 0; x < teamMembers.length; ++x) {
-    if (teamMembers[x] === "Manager") {
-      await managerHTML(teamMembers[x]);
-    } else if (teamMembers[x] === "Intern") {
-      await internHTML(teamMembers[x]);
+async function arrayToHTML() {
+  for (let x = 1; x < teamMembers.length; ++x) {
+    if (teamMembers[x].title === "Engineer") {
+      await engineerHTML(teamMembers[x].title);
     } else {
-      await engineerHTML(teamMembers[x]);
+      await internHTML(teamMembers[x]);
     }
   }
 }
 
-init();
+promptManager();
