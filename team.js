@@ -62,13 +62,12 @@ async function teamBuilder() {
       await promptIntern();
       break;
     default:
-      await arrayToHTML(teamMembers);
-      await buildHTML(teamMembers, members);
-      console.log(members);    
+      // await arrayToHTML(teamMembers);
+      await buildHTML(teamMembers);
   }
 }
 
-async function buildHTML(teamMembers, members) {
+async function buildHTML(teamMembers) {
   fs.writeFile(
     "index.html",
     `<!DOCTYPE html>
@@ -89,7 +88,7 @@ async function buildHTML(teamMembers, members) {
       <div class="container" style="border: solid;">
         <div class="row">
           ${await managerHTML(teamMembers)}
-          ${members}
+          ${await arrayToHTML(teamMembers)}
         </div>
       </div>
     </body>
@@ -107,7 +106,8 @@ async function managerHTML(teamMember) {
       <div class="card" style="background-color: rgb(243, 104, 104); width: 250px;">
         <img class="card-img-top text-center" style="margin-left: 50px; width: 150px; height: 150px;" src="./images/managerimg.png"/>
           <div class="card-body">
-          <h5 class="text-center">${teamMember[0].name} ${teamMember[0].title}</h5>
+          <h5 class="text-center">${teamMember[0].name}</h5>
+          <h5 class="text-center">${teamMember[0].title}</h5>
             <ul class="list-group list-group-flush">
               <li class="list-group-item">ID #: ${teamMember[0].id}</li>
               <li class="list-group-item">Email: ${teamMember[0].email}</li>
@@ -124,7 +124,8 @@ async function internHTML(teamMember) {
       <div class="card" style="background-color: rgb(255, 188, 64); width: 250px;">
         <img class="card-img-top text-center" style="margin-left: 50px; width: 150px; height: 150px;" src="./images/internimg.png"/>
           <div class="card-body">
-          <h5 class="text-center">${teamMember.name} ${teamMember.title}</h5>
+          <h5 class="text-center">${teamMember.name}</h5>
+          <h5 class="text-center">${teamMember.title}</h5>
             <ul class="list-group list-group-flush">
               <li class="list-group-item">ID #: ${teamMember.id}</li>
               <li class="list-group-item">Email: ${teamMember.email}</li>
@@ -142,11 +143,12 @@ async function engineerHTML(teamMember) {
       <div class="card" style="background-color: rgb(127, 221, 127); width: 250px;">
         <img class="card-img-top text-center" style="margin-left: 50px; width: 150px; height: 150px;" src="./images/engineerimg.png"/>
           <div class="card-body">
-          <h5 class="text-center">${teamMember.name} ${teamMember.title}</h5>
+          <h5 class="text-center">${teamMember.name}</h5>
+          <h5 class="text-center">${teamMember.title}</h5>
             <ul class="list-group list-group-flush">
               <li class="list-group-item">ID #: ${teamMember.id}</li>
               <li class="list-group-item">Email: ${teamMember.email}</li>
-              <li class="list-group-item">GitHub: ${teamMember.username}</li>
+              <li class="list-group-item">GitHub:<a style="font-size: 32px; color: black; text-decoration: none;" href="https://github.com/${teamMember.username}" target="_blank"></a>${teamMember.username}</li>
             </ul>
           </div>
       </div>
@@ -163,6 +165,7 @@ async function arrayToHTML(teamMember) {
       await internHTML(teamMember[x]);
     }
   }
+  return members;
 }
 
 promptManager();
