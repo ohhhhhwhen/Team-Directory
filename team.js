@@ -62,13 +62,10 @@ async function teamBuilder() {
       break;
     default:
       buildHTML(teamMembers);
-      console.log(teamMembers[0].name);
-      console.log(teamMembers[1].name);
-
   }
 }
 
-function buildHTML(teamMembers) {
+async function buildHTML(teamMembers) {
   fs.writeFile(
     "index.html",
     `<!DOCTYPE html>
@@ -87,14 +84,14 @@ function buildHTML(teamMembers) {
       <title>Team Directory</title>
     </head>
     <body>
-      <div class="container">
-        <div class="jumbotron">
-          <h1 class="display-4">Team Directory</h1>
-        </div>
-      <div class="row">
-          ${managerHTML(teamMembers)}
-          ${arrayToHTML(teamMembers)}
+      <div class="jumbotron text-center">
+        <h1 class="display-4">Team Directory</h1>
       </div>
+      <div class="container">
+        <div class="row">
+          ${await managerHTML(teamMembers)}
+          ${await arrayToHTML(teamMembers)}
+        </div>
       </div>
     </body>
   </html>`,
@@ -108,54 +105,63 @@ function buildHTML(teamMembers) {
 async function managerHTML(teamMember) {
   return `
     <div class="col-md-12">
-      <div class="card">
-          <img class="card-img-top" src="./images/managerimg.jpg"/>
+      <div class="card" style="background-color: rgb(243, 104, 104); width: 250px;">
+        <img class="card-img-top text-center" style="width: 150px; height: 150px;" src="./images/managerimg.png"/>
           <div class="card-body">
-            <h4>${teamMember[0].name}</h4>
-            <h4>${teamMember[0].title}</h4>
-            <h4>ID #: ${teamMember[0].id}</h4>
-            <h4>Office #: ${teamMember[0].office}</h4>
-            <h4>Email: ${teamMember[0].email}</h4>
-            </div>
-          </div>`;
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">${teamMember[0].name}</li>
+              <li class="list-group-item">${teamMember[0].title}</li>
+              <li class="list-group-item">ID #: ${teamMember[0].id}</li>
+              <li class="list-group-item">Office #: ${teamMember[0].office}</li>
+              <li class="list-group-item">Email: ${teamMember[0].email}</li>
+            </ul>
+          </div>
+      </div>
+    </div>`;
 }
 
 async function internHTML(teamMember) {
   return `
     <div class="col-md-3">
-      <div class="card">
-          <img class="card-img-top" src="./images/internimg.jpg"/>
+      <div class="card" style="width: 250px;">
+        <img class="card-img-top text-center" style="background-color: rgb(255, 188, 64); width: 150px; height: 150px;" src="./images/internimg.jpg"/>
           <div class="card-body">
-            <h4>${teamMember.name}</h4>
-            <h4>${teamMember.title}</h4>
-            <h4>ID #: ${teamMember.id}</h4>
-            <h4>Email: ${teamMember.email}</h4>
-            <h4>School: ${teamMember.school}</h4>
-            </div>
-          </div>`;
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">${teamMember.name}</li>
+              <li class="list-group-item">${teamMember.title}</li>
+              <li class="list-group-item">ID #: ${teamMember.id}</li>
+              <li class="list-group-item">Email: ${teamMember.email}</li>
+              <li class="list-group-item">School: ${teamMember.school}</li>
+            </ul>
+          </div>
+      </div>
+    </div>`;
 }
 
 async function engineerHTML(teamMember) {
   return `
     <div class="col-md-3">
-      <div class="card">
-          <img class="card-img-top" src="./images/engineerimg.jpg"/>
+      <div class="card" style="width: 250px;">
+        <img class="card-img-top text-center" style="background-color: rgb(127, 221, 127); width: 150px; height: 150px;" src="./images/engineerimg.jpg"/>
           <div class="card-body">
-            <h4>${teamMember.name}</h4>
-            <h4>${teamMember.title}</h4>
-            <h4>ID #: ${teamMember.id}</h4>
-            <h4>Email: ${teamMember.email}</h4>
-            <h4>GitHub: ${teamMember.username}</h4>
-            </div>
-          </div>`;
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">${teamMember.name}</li>
+              <li class="list-group-item">${teamMember.title}</li>
+              <li class="list-group-item">ID #: ${teamMember.id}</li>
+              <li class="list-group-item">Email: ${teamMember.email}</li>
+              <li class="list-group-item">GitHub: ${teamMember.username}</li>
+            </ul>
+          </div>
+      </div>
+    </div>`;
 }
 
-async function arrayToHTML(teamMembers) {
-  for (let x = 1; x < teamMembers.length; ++x) {
-    if (teamMembers[x].title === "Engineer") {
-      await engineerHTML(teamMembers[x].title);
+async function arrayToHTML(teamMember) {
+  for (let x = 1; x < teamMember.length; ++x) {
+    if (teamMember[x].title === "Engineer") {
+      await engineerHTML(teamMember[x]);
     } else {
-      await internHTML(teamMembers[x]);
+      await internHTML(teamMember[x]);
     }
   }
 }
