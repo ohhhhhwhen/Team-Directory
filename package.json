@@ -1,0 +1,33 @@
+{
+  "name": "team-directory",
+  "version": "1.0.0",
+  "description": "create a team page with classes",
+  "main": "team.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "fs": "^0.0.1-security",
+    "init": "^0.1.2",
+    "inquirer": "^7.0.4",
+    "nodemon": "^2.0.2",
+    "require": "^2.4.20",
+    "test": "^0.6.0",
+    "uglify-js": "^3.7.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ohhhhhwhen/Team-Directory.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ohhhhhwhen/Team-Directory/issues"
+  },
+  "homepage": "https://github.com/ohhhhhwhen/Team-Directory#readme"
+}
