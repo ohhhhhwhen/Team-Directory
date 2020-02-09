@@ -2,10 +2,10 @@
 
 const fs = require("fs");
 const inquirer = require("inquirer");
-const Employee = require("./Employee");
-const Engineer = require("./Engineer");
-const Manager = require("./Manager");
-const Intern = require("./Intern");
+const Employee = require("./lib/Employee");
+const Engineer = require("./lib/Engineer");
+const Manager = require("./lib/Manager");
+const Intern = require("./lib/Intern");
 const prompt = require("./prompt");
 const teamMembers = [];
 let members = "";

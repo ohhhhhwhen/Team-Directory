@@ -1,6 +1,6 @@
 'use strict';
 
-const Employee = require('../Employee');
+const Employee = require('../lib/Employee');
 
 test('Can instantiate Employee instance', () => {
   const employee = new Employee();
