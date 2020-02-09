@@ -4,7 +4,7 @@
 * [Deployed Repo](#deployed-repo)
 * [Assignment Info](#assignment-info)
 * [Technologies](#technologies)
-* [Files / Running Pages](#files/running-pages)
+* [Running Pages](#running-pages)
 * [Key Notes](#key-notes)
 
 ## Deployed Repo
@@ -30,7 +30,7 @@ Project is created with:
 * Express
 * NPM
 	
-## Files / Running Pages
+## Running Pages
 * Here are some screen shots of the running page from an images folder:
 
  ![Terminal Prompts/Inputs](images/team-inputs.png)
