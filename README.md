@@ -4,7 +4,7 @@
 * [Deployed Repo](#deployed-repo)
 * [Assignment Info](#assignment-info)
 * [Technologies](#technologies)
-* [Files / Running Pages](#files)
+* [Files / Running Pages](#files/running-pages)
 * [Key Notes](#key-notes)
 
 ## Deployed Repo
