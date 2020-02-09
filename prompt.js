@@ -13,7 +13,14 @@ module.exports = {
     {
       type: "input",
       message: "Enter Email:",
-      name: "email"
+      name: "email",
+      validate: input => {
+        const test = input.match(
+          /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+        );
+        if (test) return true;
+        else new Error("Please enter a valid email address!");
+      }
     },
     {
       type: "input",
@@ -35,7 +42,13 @@ module.exports = {
     {
       type: "input",
       message: "Enter Email:",
-      name: "email"
+      name: "email",
+      validate: input => {
+        const test = input.match(
+          /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+        );
+        if (test) return true;
+      }
     },
     {
       type: "input",
@@ -57,7 +70,14 @@ module.exports = {
     {
       type: "input",
       message: "Enter Email:",
-      name: "email"
+      name: "email",
+      validate: input => {
+        const test = input.match(
+          /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+        );
+        if (test) return true;
+        else new Error("Please enter a valid email address!");
+      }
     },
     {
       type: "input",
@@ -70,11 +90,7 @@ module.exports = {
       type: "list",
       message: "Pick One:",
       name: "pick",
-      choices: [
-        "Add Intern",
-        "Add Engineer",
-        "All Done"
-      ]
+      choices: ["Add Intern", "Add Engineer", "All Done"]
     }
   ]
 };
