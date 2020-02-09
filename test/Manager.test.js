@@ -1,6 +1,6 @@
 'use strict';
 
-const Manager = require('../manager');
+const Manager = require('../Manager');
 
 test('Can set office number via constructor argument', () => {
   const testValue = 100;

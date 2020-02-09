@@ -1,31 +1,25 @@
-const Team = require('./team');
+'use strict';
 
-class Employee{
-  constructor(name, title, id, email){
+class Employee {
+  constructor(name, id, email) {
       this.name = name;
       this.id = id;
-      this.title = title;
       this.email = email;
-
-      console.log(`Name: ${this.getName()}`);
-      console.log(`ID: ${this.getID()}`);
-      console.log(`Email: ${this.getEmail()}`);
-
   }
-  getName(){
+  getName() {
       return this.name;
   }
 
-  getID(){
+  getId() {
       return this.id;
   }
 
-  getEmail(){
+  getEmail() {
       return this.email;
   }
 
   getRole(){
-      return this.title;
+      return  'Employee';
   }
 }
 

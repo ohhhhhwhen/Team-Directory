@@ -2,20 +2,18 @@
 
 const fs = require("fs");
 const inquirer = require("inquirer");
-const Employee = require("./employee");
-const Engineer = require("./engineer");
-const Manager = require("./manager");
-const Intern = require("./intern");
+const Employee = require("./Employee");
+const Engineer = require("./Engineer");
+const Manager = require("./Manager");
+const Intern = require("./Intern");
 const prompt = require("./prompt");
 const teamMembers = [];
 let members = "";
 
 async function promptManager() {
-  const title = "Manager";
   const answers = await inquirer.prompt(prompt.Manager);
   const manager = new Manager(
     answers.name,
-    title,
     answers.id,
     answers.email,
     answers.office
@@ -25,11 +23,9 @@ async function promptManager() {
 }
 
 async function promptEngineer() {
-  const title = "Engineer";
   const answers = await inquirer.prompt(prompt.Engineer);
   const engineer = new Engineer(
     answers.name,
-    title,
     answers.id,
     answers.email,
     answers.username
@@ -39,11 +35,9 @@ async function promptEngineer() {
 }
 
 async function promptIntern() {
-  const title = "Intern";
   const answers = await inquirer.prompt(prompt.Intern);
   const intern = new Intern(
     answers.name,
-    title,
     answers.id,
     answers.email,
     answers.school
@@ -83,9 +77,9 @@ async function buildHTML(teamMembers) {
     </head>
     <body>
       <div class="jumbotron text-center" style="background-image: url(https://image.shutterstock.com/image-vector/kids-learn-coding-banner-computer-260nw-1392200774.jpg);">
-        <h1 class="display-4">Team Directory</h1>
+        <h1 class="display-4" style="margin-top: -48px;">Team Directory</h1>
       </div>
-      <div class="container" style="border: solid;">
+      <div class="container">
         <div class="row">
           ${await managerHTML(teamMembers)}
           ${await arrayToHTML(teamMembers)}
@@ -101,17 +95,28 @@ async function buildHTML(teamMembers) {
 }
 
 async function managerHTML(teamMember) {
+  let role = teamMember[0].getRole();
+  let mail = teamMember[0].getEmail();
+  let offN = teamMember[0].getOfficeNumber();
   return `
     <div class="col-md-4">
-      <div class="card" style="background-color: rgb(243, 104, 104); width: 250px;">
-        <img class="card-img-top text-center" style="margin-left: 50px; width: 150px; height: 150px;" src="./images/managerimg.png"/>
+      <div class="card" style="background-color: rgb(243, 104, 104); width: 300px;">
+        <img class="card-img-top text-center" style="margin-left: 75px; width: 150px; height: 150px;" src="./images/managerimg.png"/>
           <div class="card-body">
           <h5 class="text-center">${teamMember[0].name}</h5>
-          <h5 class="text-center">${teamMember[0].title}</h5>
+          <h5 class="text-center">${role}</h5>
             <ul class="list-group list-group-flush">
               <li class="list-group-item">ID #: ${teamMember[0].id}</li>
-              <li class="list-group-item">Email: ${teamMember[0].email}</li>
-              <li class="list-group-item">Office #: ${teamMember[0].office}</li>
+              <li class="list-group-item">
+                  Email:
+                  <a
+                    style="font-size: 16px; color: rgb(243, 104, 104); text-decoration: none;"
+                    href="mailto:${mail}"
+                    target="_blank"
+                    >${mail}</a
+                  >
+                </li>
+              <li class="list-group-item">Office #: ${offN}</li>
             </ul>
           </div>
       </div>
@@ -119,16 +124,26 @@ async function managerHTML(teamMember) {
 }
 
 async function internHTML(teamMember) {
+  let role = teamMember.getRole();
+  let mail = teamMember.getEmail();
   let internstr = `
     <div class="col-md-4">
-      <div class="card" style="background-color: rgb(255, 188, 64); width: 250px;">
-        <img class="card-img-top text-center" style="margin-left: 50px; width: 150px; height: 150px;" src="./images/internimg.png"/>
+      <div class="card" style="background-color: rgb(255, 188, 64); width: 300px;">
+        <img class="card-img-top text-center" style="margin-left: 75px; width: 150px; height: 150px;" src="./images/internimg.png"/>
           <div class="card-body">
           <h5 class="text-center">${teamMember.name}</h5>
-          <h5 class="text-center">${teamMember.title}</h5>
+          <h5 class="text-center">${role}</h5>
             <ul class="list-group list-group-flush">
               <li class="list-group-item">ID #: ${teamMember.id}</li>
-              <li class="list-group-item">Email: ${teamMember.email}</li>
+              <li class="list-group-item">
+                  Email:
+                  <a
+                    style="font-size: 16px; color: rgb(255, 188, 64); text-decoration: none;"
+                    href="mailto:${mail}"
+                    target="_blank"
+                    >${mail}</a
+                  >
+                </li>
               <li class="list-group-item">School: ${teamMember.school}</li>
             </ul>
           </div>
@@ -138,17 +153,28 @@ async function internHTML(teamMember) {
 }
 
 async function engineerHTML(teamMember) {
+  let role = teamMember.getRole();
+  let mail = teamMember.getEmail();
+  let gH = teamMember.getGithub();
   let engineerstr = `
     <div class="col-md-4">
-      <div class="card" style="background-color: rgb(127, 221, 127); width: 250px;">
-        <img class="card-img-top text-center" style="margin-left: 50px; width: 150px; height: 150px;" src="./images/engineerimg.png"/>
+      <div class="card" style="background-color: rgb(127, 221, 127); width: 300px;">
+        <img class="card-img-top text-center" style="margin-left: 75px; width: 150px; height: 150px;" src="./images/engineerimg.png"/>
           <div class="card-body">
           <h5 class="text-center">${teamMember.name}</h5>
-          <h5 class="text-center">${teamMember.title}</h5>
+          <h5 class="text-center">${role}</h5>
             <ul class="list-group list-group-flush">
               <li class="list-group-item">ID #: ${teamMember.id}</li>
-              <li class="list-group-item">Email: ${teamMember.email}</li>
-              <li class="list-group-item">GitHub:<a style="font-size: 32px; color: black; text-decoration: none;" href="https://github.com/${teamMember.username}" target="_blank"></a>${teamMember.username}</li>
+              <li class="list-group-item">
+                  Email:
+                  <a
+                    style="font-size: 16px; color: rgb(127, 221, 127); text-decoration: none;"
+                    href="mailto:${mail}"
+                    target="_blank"
+                    >${mail}</a
+                  >
+                </li>
+              <li class="list-group-item">GitHub: <a style="font-size: 16px; color: rgb(127, 221, 127); text-decoration: none;" href="https://github.com/${teamMember.username}" target="_blank">${teamMember.username}</a></li>
             </ul>
           </div>
       </div>
@@ -159,7 +185,7 @@ async function engineerHTML(teamMember) {
 
 async function arrayToHTML(teamMember) {
   for (let x = 1; x < teamMember.length; ++x) {
-    if (teamMember[x].title === "Engineer") {
+    if (teamMember[x] instanceof Engineer) {
       await engineerHTML(teamMember[x]);
     } else {
       await internHTML(teamMember[x]);
